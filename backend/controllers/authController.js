@@ -52,12 +52,22 @@ export const login = async (req, res) => {
             secure: false,
             maxAge: 3600000
         })
-        res.status(200).json({ message: "Logging in" });
+        res.status(200).json({ message: "Logging in", user: user });
     } catch (error) {
         res.status(500).json({ message: 'Error logging in', error });
     }
 };
 
-// stpring token in cookie
+export const verifyToken = async (req, res) => {
+    console.log("demo here")
+    const token = req.cookies.token;
+    console.log(token)
+    if (!token) return res.status(401).json({ error: 'Unauthorized' });
 
-// verified status in db
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        return res.status(200).json({user: decoded})
+    } catch (err) {
+        res.status(401).json({ error: 'Invalid token' });
+    }
+}

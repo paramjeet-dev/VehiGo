@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import AutoFixHomepage from './pages/HomePage'
 import LoginPage from './pages/Login'
 import SignUpPage from './pages/Signup'
+import ProtectedRoutes from './components/ProtectedRoutes'
 import UserDashboard from './pages/Dashboard'
 
 const router = createBrowserRouter([
@@ -19,7 +20,7 @@ const router = createBrowserRouter([
   },
   {
     path:'/dashboard',
-    element:<UserDashboard/>
+    element:<><ProtectedRoutes><UserDashboard/></ProtectedRoutes></>
   }
 ])
 

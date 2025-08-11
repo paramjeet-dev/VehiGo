@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import axios from 'axios';
+import { useAuthStore } from '../store/authStore.js';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -22,12 +23,15 @@ const LoginPage = () => {
 
   const navigate = useNavigate();
 
+  const { setUser, setToken } = useAuthStore();
+
   const onSubmit = async (data) => {
     try {
       const response = await axios.post(`${BACKEND}/auth/login`, data, {
         withCredentials: true,
       });
-
+      setUser(response.data.user)
+      
       toast.success('Login successful!');
 
       // Clear the form
@@ -120,7 +124,7 @@ const LoginPage = () => {
                       required: "Password is required",
                       minLength: {
                         value: 6,
-                        message: "Password must be at least 6 characters"
+                        message: "Password must be at least 8 characters"
                       }
                     })}
                   />

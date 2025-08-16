@@ -59,9 +59,7 @@ export const login = async (req, res) => {
 };
 
 export const verifyToken = async (req, res) => {
-    console.log("demo here")
     const token = req.cookies.token;
-    console.log(token)
     if (!token) return res.status(401).json({ error: 'Unauthorized' });
 
     try {
